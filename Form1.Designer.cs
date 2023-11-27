@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label13 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
@@ -39,8 +40,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
@@ -58,6 +57,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textBox8 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,11 +66,11 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label13.Location = new System.Drawing.Point(24, 428);
+            this.label13.Location = new System.Drawing.Point(24, 395);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(98, 13);
+            this.label13.Size = new System.Drawing.Size(102, 13);
             this.label13.TabIndex = 54;
-            this.label13.Text = "Data de solicitação";
+            this.label13.Text = "Próximo vencimento";
             // 
             // groupBox1
             // 
@@ -113,6 +114,7 @@
             this.button2.TabIndex = 52;
             this.button2.Text = "Limpar";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -137,7 +139,7 @@
             // textBox10
             // 
             this.textBox10.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.textBox10.Location = new System.Drawing.Point(177, 390);
+            this.textBox10.Location = new System.Drawing.Point(177, 357);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(263, 20);
             this.textBox10.TabIndex = 49;
@@ -146,7 +148,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label12.Location = new System.Drawing.Point(24, 393);
+            this.label12.Location = new System.Drawing.Point(24, 360);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(79, 13);
             this.label12.TabIndex = 48;
@@ -155,7 +157,7 @@
             // textBox9
             // 
             this.textBox9.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.textBox9.Location = new System.Drawing.Point(177, 351);
+            this.textBox9.Location = new System.Drawing.Point(177, 318);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(70, 20);
             this.textBox9.TabIndex = 47;
@@ -164,29 +166,11 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label11.Location = new System.Drawing.Point(24, 354);
+            this.label11.Location = new System.Drawing.Point(24, 321);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(89, 13);
             this.label11.TabIndex = 46;
             this.label11.Text = "Desconto / bolsa";
-            // 
-            // textBox8
-            // 
-            this.textBox8.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.textBox8.Location = new System.Drawing.Point(177, 315);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(70, 20);
-            this.textBox8.TabIndex = 45;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label10.Location = new System.Drawing.Point(24, 318);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(137, 13);
-            this.label10.TabIndex = 44;
-            this.label10.Text = "Mês da última parcela paga";
             // 
             // textBox7
             // 
@@ -337,16 +321,37 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(177, 422);
+            this.dateTimePicker1.Location = new System.Drawing.Point(177, 389);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(84, 20);
             this.dateTimePicker1.TabIndex = 55;
+            this.dateTimePicker1.Value = new System.DateTime(2023, 11, 1, 0, 0, 0, 0);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Cursor = System.Windows.Forms.Cursors.Default;
+            this.label10.Location = new System.Drawing.Point(24, 434);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(98, 13);
+            this.label10.TabIndex = 56;
+            this.label10.Text = "Data de solicitação";
+            // 
+            // textBox8
+            // 
+            this.textBox8.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox8.Location = new System.Drawing.Point(177, 434);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(70, 20);
+            this.textBox8.TabIndex = 57;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(951, 513);
+            this.Controls.Add(this.textBox8);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.groupBox1);
@@ -357,8 +362,6 @@
             this.Controls.Add(this.label12);
             this.Controls.Add(this.textBox9);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.textBox8);
-            this.Controls.Add(this.label10);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.textBox6);
@@ -375,8 +378,9 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Desligamento Automático";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -396,8 +400,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBox6;
@@ -415,6 +417,8 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBox8;
     }
 }
 

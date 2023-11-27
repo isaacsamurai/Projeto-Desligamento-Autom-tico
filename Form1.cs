@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Novo_Desligamento_Automático
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string curso, desligamento, informacoesDevolver, pagar, devolver, informacoes, simulacao, informacaoSimulacaoDevolver, detalhesParcelas;
+            string curso, desligamento, informacoesDesligamentoDevolver, pagar, devolver, informacoes, simulacao, informacaoSimulacaoDevolver, detalhesParcelas, datadeSolicitacao, calculo, desligamentoDevolver, simulacaoDevolver;
 
             int numeroParcela, numeroParcelaPaga, chTotal, chMinistrada, proximaParcela;
 
@@ -35,11 +36,12 @@ namespace Novo_Desligamento_Automático
             valorChMinistrada = valorCh * chMinistrada;
             multa = valorCurso * 0.02;
             valoraPagar = valorChMinistrada + multa;
-            numeroParcelaPaga = Convert.ToInt32(textBox3.Text);
-            valorParcelaPaga = Convert.ToDouble(textBox4.Text);
+            numeroParcelaPaga = Convert.ToInt32(textBox4.Text);
+            valorParcelaPaga = Convert.ToDouble(textBox3.Text);
             totalPago = numeroParcelaPaga * valorParcelaPaga;
             resultado = valoraPagar - totalPago;
             resultadoAbsoluto = Math.Abs(resultado);
+            datadeSolicitacao = (textBox8.Text);
             DateTime dataVencimento = dateTimePicker1.Value;
             proximaParcela = Convert.ToInt32(textBox7.Text);
             parcelasGeradas = resultado / valorParcela;      //valor quebrado que será transformado em int
@@ -49,41 +51,55 @@ namespace Novo_Desligamento_Automático
 
             desligamento = ("Prezado(a) aluno(a), \r\n" +
                 "\r\n" +
-                "O desligamento referente ao curso " + curso + " foi realizado conforme solicitado. Aguardamos retorno numa próxima oportunidade.\r\n" +
-              "\r\n" +
-              "Conforme contrato de prestação de serviços, em casos de desligamento é cobrada a carga horária ministrada até a data de solicitação, acrescido da multa de 2% sobre o valor total do curso."
-                + "\r\n"
-                + "\r\n" +
-                "Caso tenha assistido aulas após a data de solicitação, informamos que perderá a carga horária ministrada e possíveis aprovações.\r\n" +
-                "\r\n" +
-                "Condição de pagamento: " + numeroParcela + " x R$ " + valorParcela.ToString("N2") + "\r\n" +
-                "Valor total do curso: R$ " + valorCurso.ToString("N2") + "\r\n" +
-                "Carga horária total do curso: " + chTotal + "\r\n" +
-                "Custo hora-aula do curso: R$ " + valorCh.ToString("N2") + "\r\n" +
-                "Carga horária ministrada até a data de solicitação: " + chMinistrada + "\r\n" +
-                "Valor da carga horária ministrada: R$ " + valorChMinistrada.ToString("N2") + "\r\n" +
-                "Multa: R$ " + multa.ToString("N2") + "\r\n" +
-                "Total: R$ " + valoraPagar.ToString("N2") + "\r\n" +
-                "Valor pago: " + numeroParcelaPaga + " x R$ " + valorParcelaPaga.ToString("N2") + " = " +
-                "R$ " + totalPago.ToString("N2") + "\r\n" +
-                "\r\n");
+                "O desligamento referente ao curso " + curso + " foi realizado conforme solicitado. Aguardamos retorno numa próxima oportunidade.\r\n\r\n" +
+
+              "Conforme contrato de prestação de serviços, em casos de desligamento é cobrada a carga horária ministrada até a data de solicitação, " + datadeSolicitacao + " acrescido da multa de 2% sobre o valor total do curso."
+                + "\r\n\r\n" +
+
+                "Caso tenha assistido aulas após a data de solicitação, informamos que perderá a carga horária ministrada e possíveis aprovações.\r\n\r\n" +
+
+                "O valor cobrado, se refere as aulas já ministradas até a data de solicitação do desligamento somados a multa, não tem relação com aulas futuras.\r\n\r\n" +
+
+                "De acordo com o cálculo existe o valor de R$ " +resultado.ToString("N2") + " para pagamento. \r\n\r\n" +
+
+                "Sendo assim, você deverá efetuar o pagamento das parcelas mencionadas abaixo.\r\n\r\n");
 
             simulacao = ("Prezado(a) aluno(a), \r\n" +
                 "\r\n" +
-                "Conforme solicitado, segue a simulação do desligamento do curso " + curso + " \r\n" +
-                "\r\n" +
-                "Gentileza analisar a simulação do desligamento abaixo, considerando carga horária ministrada somada a multa." + "\r\n" +
-                "\r\n" +
-              "Conforme contrato de prestação de serviços, em casos de desligamento é cobrada a carga horária ministrada até a data de solicitação, acrescido da multa de 2% sobre o valor total do curso.\r\n" +
-                "\r\n" +
-                "Caso tenha assistido aulas após a data de solicitação, informamos que perderá a carga horária ministrada e possíveis aprovações.\r\n" +
-                "\r\n" +
+                "Conforme solicitado, segue a simulação do desligamento do curso " + curso + " \r\n\r\n" +
+
+                "Gentileza analisar a simulação do desligamento abaixo, considerando carga horária ministrada somada a multa." + "\r\n\r\n" +
+
+              "Conforme contrato de prestação de serviços, em casos de desligamento é cobrada a carga horária ministrada até a data de solicitação, " +datadeSolicitacao+ " acrescido da multa de 2% sobre o valor total do curso.\r\n\r\n" +
+
+                "Caso tenha assistido aulas após a data de solicitação, informamos que perderá a carga horária ministrada e possíveis aprovações.\r\n\r\n" +
+
                 "De acordo com o cálculo, existe o valor de R$ " + resultado.ToString("N2") +
-                " para pagamento.\r\n" +
+                " para pagamento.\r\n\r\n" +
+
+                "Sendo assim, você deverá efetuar o pagamento das parcelas mencionadas abaixo.\r\n\r\n");
+
+            desligamentoDevolver = ("Prezado(a) aluno(a), \r\n" +
                 "\r\n" +
-                "Sendo assim, você deverá efetuar o pagamento das parcelas mencionadas abaixo.\r\n" +
-                "\r\n" +
-                "Condição de pagamento: " + numeroParcela + " x R$ " + valorParcela.ToString("N2") + "\r\n" +
+                "O desligamento referente ao curso " + curso + " foi realizado conforme solicitado. Aguardamos retorno numa próxima oportunidade.\r\n\r\n" +
+
+              "Conforme contrato de prestação de serviços, em casos de desligamento é cobrada a carga horária ministrada até a data de solicitação, " + datadeSolicitacao + " acrescido da multa de 2% sobre o valor total do curso."
+                + "\r\n\r\n" +
+
+                "Caso tenha assistido aulas após a data de solicitação, informamos que perderá a carga horária ministrada e possíveis aprovações.\r\n\r\n");
+
+            simulacaoDevolver = ("Prezado(a) aluno(a), \r\n\r\n" +
+
+                " Conforme solicitado, segue a simulação de desligamento do curso " + curso + "\r\n\r\n" +
+
+                "Gentileza analisar a simulação do desligamento abaixo, considerando carga horária ministrada somados à multa." + "\r\n\r\n"+
+
+              "Conforme contrato de prestação de serviços, em casos de desligamento, é cobrada a carga horária ministrada até a data de solicitação, " + datadeSolicitacao + " acrescido da multa de 2% sobre o valor total do curso."
+                + "\r\n\r\n" +
+
+                "Caso tenha assistido aulas após a data de solicitação, informamos que perderá a carga horária ministrada e possíveis aprovações.\r\n\r\n");
+
+            calculo = ("Condição de pagamento: " + numeroParcela + " x R$ " + valorParcela.ToString("N2") + "\r\n" +
                 "Valor total do curso: R$ " + valorCurso.ToString("N2") + "\r\n" +
                 "Carga horária total do curso: " + chTotal + "\r\n" +
                 "Custo hora-aula do curso: R$ " + valorCh.ToString("N2") + "\r\n" +
@@ -95,8 +111,7 @@ namespace Novo_Desligamento_Automático
                 "R$ " + totalPago.ToString("N2") + "\r\n" +
                 "\r\n");
 
-            informacoesDevolver = ("De acordo com o cálculo acima, existe um valor a devolver de R$ " + resultadoAbsoluto.ToString("N2") + "\r\n" +
-                "Gentileza encaminhar as informações descrita abaixo para que possamos programar a devolução. \r\n" +
+            informacoesDesligamentoDevolver = ("Gentileza encaminhar as informações descrita abaixo para que possamos programar a devolução. \r\n" +
                 "Nome do aluno:\r\n" +
                 "CPF do aluno:\r\n" +
                 "Nome do titular da conta:\r\n" +
@@ -108,9 +123,7 @@ namespace Novo_Desligamento_Automático
                 "Informamos ainda que a solicitação da restituição será encaminhada ao setor responsável, gentileza aguardar aproximadamente 30 dias uteis para a devolução. \r\n" +
                 "Assim que o deposito for programado informaremos a data.\r\n\r\n");
 
-            informacaoSimulacaoDevolver = ("De acordo com o cálculo abaixo, existe um valor a devolver de " + "R$ " + resultadoAbsoluto.ToString("N2") + "\r\n" +
-                "\r\n" +
-                "Após a confirmação do desligamento, gentileza encaminhar as informações descritas abaixo para que possamos programar a devolução. \r\n" +
+            informacaoSimulacaoDevolver = ("Após a confirmação do desligamento, gentileza encaminhar as informações descritas abaixo para que possamos programar a devolução. \r\n" +
                 "Nome do aluno:\r\n" +
                 "CPF do aluno:\r\n" +
                 "Nome do titular da conta:\r\n" +
@@ -133,49 +146,56 @@ namespace Novo_Desligamento_Automático
             pagar = ("Valor a Pagar: R$ " + resultado.ToString("N2") + "\r\n"
                  + "\r\n");
 
-            devolver = ("Valor a Devolver: R$ " + resultadoAbsoluto.ToString("N2") + "\r\n"
-            + "\r\n");
+            devolver = ("De acordo com o cálculo acima, existe um valor a devolver de  R$ " + resultadoAbsoluto.ToString("N2") + "\r\n\r\n");
 
 
-            for(int i = proximaParcela; i <= iparcelaGerada; i++)
+            for (int i = proximaParcela; i <= iparcelaGerada + proximaParcela - 1; i++)
             {
-
-                if (i == iparcelaGerada)
-                {
-                    valorParcela += valorResidual;
-                }
-
                 detalhesParcelas += $"Parcela {i} - Vencimento {dataVencimento:dd/MM/yyyy} - R$ {valorParcela:N2}\r\n";
 
                 dataVencimento = dataVencimento.AddMonths(1);
-
-                if (valorResidual > 0)
-                {
-                    detalhesParcelas += $"Parcela {i} - Vencimento {dataVencimento:dd/MM/yyyy} - R$ {valorResidual:N2}\r\n";
-                }
-
             }
-
+                
+            if (valorResidual > 0)
+            {
+               detalhesParcelas += $"Parcela {iparcelaGerada + proximaParcela} - Vencimento {dataVencimento:dd/MM/yyyy} - R$ {valorResidual:N2} - Será solicitado o ajuste do boleto e estará disponível no SGA." +"\r\n\r\n";
+            }
 
 
             if (radioButton1.Checked && resultado > 0)
             {
-                textBox11.Text = (desligamento + detalhesParcelas+ pagar + informacoes);
+                textBox11.Text = (desligamento + detalhesParcelas+ calculo + pagar + informacoes);
             }
 
             else if (radioButton1.Checked && resultado < 0)
             {
-                textBox11.Text = desligamento + devolver + informacoesDevolver;
+                textBox11.Text = desligamentoDevolver + calculo + devolver + informacoesDesligamentoDevolver;
             }
 
             else if (!radioButton1.Checked && resultado > 0)
             {
-                textBox11.Text = simulacao + pagar + informacoes;
+                textBox11.Text = simulacao + detalhesParcelas + calculo + pagar +informacoes;
             }
 
             else if (!radioButton1.Checked && resultado < 0)
             {
-                textBox11.Text = simulacao + devolver + informacaoSimulacaoDevolver;
+                textBox11.Text = simulacaoDevolver + calculo + devolver + informacaoSimulacaoDevolver;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            LimparForm();
+        }
+
+        private void LimparForm()
+        {
+            foreach (Control controle in this.Controls)
+            {
+                if (controle is TextBox)
+                {
+                    ((TextBox)controle).Clear();
+                }
             }
         }
     }
